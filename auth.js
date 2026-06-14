@@ -21,11 +21,12 @@ if (cadastroForm) {
 if (
   !email.endsWith("@voeazul.com.br") &&
   !email.endsWith("@azulcargo.com.br") &&
-  !email.endsWith("@azultec.com.br")
+  !email.endsWith("@azullogistica.com.br")
 ) {
   showMessage(msg, "Apenas e-mails oficiais da Azul serão aprovados.");
   return;
 }
+    
     try {
       const cred = await createUserWithEmailAndPassword(auth, email, senha);
       await setDoc(doc(db, "usuarios", cred.user.uid), {
