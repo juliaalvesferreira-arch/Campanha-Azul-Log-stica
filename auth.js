@@ -17,11 +17,16 @@ if (cadastroForm) {
     e.preventDefault();
     const email = document.getElementById("email").value.trim().toLowerCase();
     const senha = document.getElementById("senha").value;
-
-    if (!email.endsWith("@voeazul.com.br")) {
-      showMessage(msg, "Apenas e-mails oficiais da Azul serão aprovados.");
-      return;
-    }
+    const dominiosPermitidos = [
+  "voeazul.com.br",
+  "azulcargo.com.br",
+  "azullogistica.com.br"
+];
+const dominioEmail = email.split("@")[1];
+if (!dominiosPermitidos.includes(dominioEmail)) {
+  showMessage(msg, "Apenas e-mails oficiais da Azul serão aprovados.");
+  return;
+}
 
     try {
       const cred = await createUserWithEmailAndPassword(auth, email, senha);
