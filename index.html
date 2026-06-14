@@ -4342,9 +4342,13 @@ function filterTable(input, gid){
   });
 }
 </script>
-  <script type="module" src="./auth.js"></script>
-<script>
- window.protegerCampanha();
+  <script type="module">
+ import "./auth.js";
+ window.addEventListener("DOMContentLoaded", () => {
+   if (window.protegerCampanha) {
+     window.protegerCampanha();
+   }
+ });
 </script>
 </body>
 </html>
