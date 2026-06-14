@@ -1,6 +1,16 @@
 import { auth, db } from "./firebase-config.js";
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-import { doc, setDoc, getDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  onAuthStateChanged,
+  signOut
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import {
+  doc,
+  setDoc,
+  getDoc,
+  serverTimestamp
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 function showMessage(el, text, type = "error") {
   if (!el) return;
@@ -16,17 +26,20 @@ document.addEventListener("DOMContentLoaded", () => {
   if (cadastroForm) {
     cadastroForm.addEventListener("submit", async (e) => {
       e.preventDefault();
+
       const email = document.getElementById("email").value.trim().toLowerCase();
       const senha = document.getElementById("senha").value;
 
       try {
         const cred = await createUserWithEmailAndPassword(auth, email, senha);
+
         await setDoc(doc(db, "usuarios", cred.user.uid), {
           email,
           aprovado: false,
           role: "usuario",
           criadoEm: serverTimestamp()
         });
+
         window.location.href = "./aguardando.html";
       } catch (error) {
         showMessage(msg, "Erro ao cadastrar: " + error.message);
@@ -37,6 +50,7 @@ document.addEventListener("DOMContentLoaded", () => {
   if (loginForm) {
     loginForm.addEventListener("submit", async (e) => {
       e.preventDefault();
+
       const email = document.getElementById("email").value.trim().toLowerCase();
       const senha = document.getElementById("senha").value;
 
@@ -72,6 +86,7 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       const snap = await getDoc(doc(db, "usuarios", user.uid));
+
       if (!snap.exists() || !snap.data().aprovado) {
         window.location.href = "./aguardando.html";
         return;
@@ -82,6 +97,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   const logoutBtn = document.getElementById("logoutBtn");
+
   if (logoutBtn) {
     logoutBtn.addEventListener("click", async () => {
       await signOut(auth);
