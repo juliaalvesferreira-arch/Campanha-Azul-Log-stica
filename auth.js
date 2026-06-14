@@ -1,10 +1,12 @@
 import { auth, db } from "./firebase-config.js";
+
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   onAuthStateChanged,
   signOut
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
 import {
   doc,
   setDoc,
@@ -12,17 +14,27 @@ import {
   serverTimestamp
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
+// ================================
+// Função de mensagem
+// ================================
 function showMessage(el, text, type = "error") {
   if (!el) return;
   el.textContent = text;
   el.className = `message ${type}`;
 }
 
+// ================================
+// INIT
+// ================================
 document.addEventListener("DOMContentLoaded", () => {
+
   const loginForm = document.getElementById("loginForm");
   const cadastroForm = document.getElementById("cadastroForm");
   const msg = document.getElementById("msg");
 
+  // ================================
+  // CADASTRO
+  // ================================
   if (cadastroForm) {
     cadastroForm.addEventListener("submit", async (e) => {
       e.preventDefault();
@@ -41,12 +53,16 @@ document.addEventListener("DOMContentLoaded", () => {
         });
 
         window.location.href = "./aguardando.html";
+
       } catch (error) {
         showMessage(msg, "Erro ao cadastrar: " + error.message);
       }
     });
   }
 
+  // ================================
+  // LOGIN
+  // ================================
   if (loginForm) {
     loginForm.addEventListener("submit", async (e) => {
       e.preventDefault();
@@ -56,6 +72,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       try {
         const cred = await signInWithEmailAndPassword(auth, email, senha);
+
         const snap = await getDoc(doc(db, "usuarios", cred.user.uid));
 
         if (!snap.exists()) {
@@ -72,13 +89,19 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         window.location.href = "./index.html";
+
       } catch (error) {
         showMessage(msg, "Erro no login: " + error.message);
       }
     });
   }
 
+  // ================================
+  // PROTEÇÃO DE PÁGINA
+  // ================================
   if (document.body.dataset.proteger === "true") {
+    document.body.style.display = "none";
+
     onAuthStateChanged(auth, async (user) => {
       if (!user) {
         window.location.href = "./login.html";
@@ -96,6 +119,9 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  // ================================
+  // LOGOUT
+  // ================================
   const logoutBtn = document.getElementById("logoutBtn");
 
   if (logoutBtn) {
@@ -104,4 +130,5 @@ document.addEventListener("DOMContentLoaded", () => {
       window.location.href = "./login.html";
     });
   }
+
 });
