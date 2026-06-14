@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Campanha de Vendas 2º Semestre – Cadastro</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg: #0A0E1A;
+  --bg2: #0D1220;
+  --surface: #131929;
+  --surface2: #1A2235;
+  --border: rgba(255,255,255,0.07);
+  --text: #E3F2FD;
+  --text-muted: #90A4AE;
+  --text-faint: #546E7A;
+  --accent: #1976D2;
+  --accent2: #42A5F5;
+  --gold: #FFB300;
+  --danger: #EF5350;
+  --success: #A5D6A7;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:'Montserrat',sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  min-height:100vh;
+  display:flex;align-items:center;justify-content:center;
+  padding:24px;
+}
+
+.bg-glow{
+  position:fixed;inset:0;pointer-events:none;z-index:0;
+  background:radial-gradient(ellipse 80% 60% at 50% 0%,rgba(25,118,210,0.25),transparent 70%),
+             linear-gradient(180deg,#050810 0%, #0A1628 50%, #0A0E1A 100%);
+}
+
+.login-card{
+  position:relative;z-index:1;
+  width:100%;max-width:420px;
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:16px;
+  padding:40px 32px;
+  box-shadow:0 20px 60px rgba(0,0,0,0.4);
+}
+
+.logo-title{
+  text-align:center;margin-bottom:8px;
+  font-family:'Montserrat',sans-serif;
+  font-weight:900;
+  font-size:clamp(1.6rem,5vw,2.2rem);
+  letter-spacing:1px;
+  background:linear-gradient(135deg,#fff 0%,#64B5F6 50%,#1565C0 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.logo-sub{
+  text-align:center;font-size:0.75rem;color:var(--text-muted);
+  letter-spacing:4px;margin-bottom:32px;
+}
+
+.form-group{margin-bottom:18px;}
+.form-label{
+  display:block;font-size:0.78rem;font-weight:600;
+  color:var(--text-muted);margin-bottom:6px;letter-spacing:0.5px;
+}
+.form-input{
+  width:100%;padding:12px 14px;border-radius:10px;
+  background:var(--surface2);border:1px solid var(--border);
+  color:var(--text);font-family:inherit;font-size:0.92rem;
+  transition:border-color 0.2s;
+}
+.form-input:focus{outline:none;border-color:var(--accent);}
+.form-input::placeholder{color:var(--text-faint);}
+.form-hint{font-size:0.72rem;color:var(--text-faint);margin-top:4px;}
+
+.btn{
+  width:100%;padding:13px 0;border-radius:10px;border:none;
+  font-family:inherit;font-weight:700;font-size:0.9rem;
+  letter-spacing:0.5px;cursor:pointer;transition:all 0.2s;
+  margin-top:6px;
+}
+.btn-primary{
+  background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;
+}
+.btn-primary:hover{filter:brightness(1.1);}
+.btn-primary:disabled{opacity:0.6;cursor:not-allowed;}
+
+.divider{
+  display:flex;align-items:center;gap:12px;
+  margin:24px 0;color:var(--text-faint);font-size:0.78rem;
+}
+.divider::before,.divider::after{content:'';flex:1;height:1px;background:var(--border);}
+
+.alt-link{
+  text-align:center;font-size:0.85rem;color:var(--text-muted);
+}
+.alt-link a{color:#64B5F6;text-decoration:none;font-weight:600;}
+.alt-link a:hover{text-decoration:underline;}
+
+.msg{
+  border-radius:10px;padding:12px 14px;font-size:0.82rem;
+  margin-bottom:18px;border:1px solid var(--border);
+  display:none;line-height:1.4;
+}
+.msg.show{display:block;}
+.msg.error{background:rgba(239,83,80,0.1);border-color:rgba(239,83,80,0.3);color:var(--danger);}
+.msg.warn{background:rgba(255,179,0,0.1);border-color:rgba(255,179,0,0.3);color:var(--gold);}
+.msg.success{background:rgba(165,214,167,0.1);border-color:rgba(165,214,167,0.3);color:var(--success);}
+
+.spinner{
+  display:inline-block;width:16px;height:16px;border:2px solid rgba(255,255,255,0.3);
+  border-top-color:#fff;border-radius:50%;
+  animation:spin 0.7s linear infinite;vertical-align:middle;margin-right:8px;
+}
+@keyframes spin{to{transform:rotate(360deg);}}
+
+.confirm-screen{display:none;text-align:center;}
+.confirm-screen.show{display:block;}
+.confirm-icon{font-size:2.6rem;margin-bottom:12px;}
+.confirm-title{font-size:1.1rem;font-weight:700;margin-bottom:8px;}
+.confirm-text{font-size:0.85rem;color:var(--text-muted);line-height:1.6;margin-bottom:24px;}
+</style>
+</head>
+<body>
+
+<div class="bg-glow"></div>
+
+<div class="login-card">
+  <div class="logo-title">Campanha de Vendas</div>
+  <div class="logo-sub">2º SEMESTRE · CRIAR CONTA</div>
+
+  <div id="msg" class="msg"></div>
+
+  <form id="form-cadastro">
+    <div class="form-group">
+      <label class="form-label" for="email">E-mail corporativo</label>
+      <input class="form-input" type="email" id="email" name="email" placeholder="seunome@voeazul.com.br" required autocomplete="email">
+      <div class="form-hint">Use seu e-mail corporativo (@voeazul.com.br, @azulcargo.com.br ou @azullogistica.com.br)</div>
+    </div>
+    <div class="form-group">
+      <label class="form-label" for="senha">Senha</label>
+      <input class="form-input" type="password" id="senha" name="senha" placeholder="Mínimo 6 caracteres" required minlength="6" autocomplete="new-password">
+    </div>
+    <div class="form-group">
+      <label class="form-label" for="senha2">Confirmar senha</label>
+      <input class="form-input" type="password" id="senha2" name="senha2" placeholder="Repita a senha" required minlength="6" autocomplete="new-password">
+    </div>
+    <button type="submit" class="btn btn-primary" id="btn-cadastro">Criar conta</button>
+  </form>
+
+  <div id="confirm-screen" class="confirm-screen">
+    <div class="confirm-icon">✅</div>
+    <div class="confirm-title">Cadastro realizado!</div>
+    <div class="confirm-text">
+      Sua conta foi criada e está <strong>aguardando aprovação</strong> do
+      administrador. Você receberá acesso à campanha assim que for aprovado.
+      Tente fazer login periodicamente.
+    </div>
+    <a class="btn btn-primary" style="display:block;text-decoration:none;text-align:center;line-height:1.6;" href="login.html">Ir para o login</a>
+  </div>
+
+  <div id="divider-link">
+    <div class="divider">já tem conta?</div>
+    <div class="alt-link">
+      <a href="login.html">Fazer login</a>
+    </div>
+  </div>
+</div>
+
+<script type="module">
+import {
+  auth,
+  createUserWithEmailAndPassword,
+  criarDocumentoUsuario,
+  dominioValido,
+  signOut
+} from "./firebase-config.js";
+
+const form = document.getElementById("form-cadastro");
+const msg = document.getElementById("msg");
+const btn = document.getElementById("btn-cadastro");
+const confirmScreen = document.getElementById("confirm-screen");
+const dividerLink = document.getElementById("divider-link");
+
+function mostrarMsg(texto, tipo) {
+  msg.textContent = texto;
+  msg.className = "msg show " + tipo;
+}
+
+function ocultarMsg() {
+  msg.className = "msg";
+}
+
+form.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  ocultarMsg();
+
+  const email = document.getElementById("email").value.trim();
+  const senha = document.getElementById("senha").value;
+  const senha2 = document.getElementById("senha2").value;
+
+  if (senha !== senha2) {
+    mostrarMsg("As senhas não coincidem.", "error");
+    return;
+  }
+
+  if (!dominioValido(email)) {
+    mostrarMsg("Use um e-mail corporativo válido (@voeazul.com.br).", "warn");
+    return;
+  }
+
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span>Criando conta...';
+
+  try {
+    const cred = await createUserWithEmailAndPassword(auth, email, senha);
+    await criarDocumentoUsuario(cred.user);
+
+    // Encerra a sessão automática criada pelo Firebase no cadastro,
+    // pois o usuário ainda não está aprovado para acessar a campanha
+    await signOut(auth);
+
+    form.style.display = "none";
+    dividerLink.style.display = "none";
+    confirmScreen.classList.add("show");
+
+  } catch (err) {
+    let texto = "Erro ao criar conta. Tente novamente.";
+    if (err.code === "auth/email-already-in-use") {
+      texto = "Este e-mail já está cadastrado. Faça login ou recupere sua senha.";
+    } else if (err.code === "auth/invalid-email") {
+      texto = "E-mail inválido.";
+    } else if (err.code === "auth/weak-password") {
+      texto = "Senha muito curta. Use ao menos 6 caracteres.";
+    }
+    mostrarMsg(texto, "error");
+    btn.disabled = false;
+    btn.textContent = "Criar conta";
+  }
+});
+</script>
+
+</body>
+</html>
