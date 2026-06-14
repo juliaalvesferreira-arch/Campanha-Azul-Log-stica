@@ -18,11 +18,6 @@ if (cadastroForm) {
     const email = document.getElementById("email").value.trim().toLowerCase();
     const senha = document.getElementById("senha").value;
 
-    if (!email.endsWith("@voeazul.com.br")) {
-      showMessage(msg, "Apenas e-mails oficiais da Azul serão aprovados.");
-      return;
-    }
-
     try {
       const cred = await createUserWithEmailAndPassword(auth, email, senha);
       await setDoc(doc(db, "usuarios", cred.user.uid), {
