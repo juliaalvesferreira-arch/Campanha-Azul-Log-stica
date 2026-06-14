@@ -4340,6 +4340,12 @@ function filterTable(input, gid){
     tr.style.display=s.includes(q)?'':'none';
   });
 }
+<script type="module">
+  import "./auth.js";
+
+  window.addEventListener("DOMContentLoaded", () => {
+    window.protegerCampanha();
+  });
 </script>
-</body>
+<body style="display:none;">
 </html>
